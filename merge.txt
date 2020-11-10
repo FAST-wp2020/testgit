@@ -1,0 +1,39 @@
+#include<stdio.h>
+#include<stdlib.h>
+#pragma warning(disable:4996)/*我好了完整版*/
+int A12(int*nums, int len) {
+	int *nnums = (int*)malloc(sizeof(int)*len);
+	int c; int p;
+	int a12 = len / 2; int a13 = len - a12;
+	/*链表和指针分配空间可控制数组长度*/
+	int*c12 = (int*)malloc(sizeof(int)*a12);
+	int *c13 = (int*)malloc(sizeof(int)*a13);
+	for (c = 0; c < a12; c++) { c12[c] = nums[c]; }
+	for (c = 0; c < a13; c++) { c13[c] = nums[a12 + c]; }
+	int b,d;
+	for (b = 1; b < a12; b++) {
+		c = c12[b]; d = b - 1; while (d >= 0 && c < c12[d]) { c12[d + 1] = c12[d]; c12[d] = c; d--; }
+	}
+	for (b = 1; b <a13; b++) {
+		c = c13[b]; d = b - 1; while (d >= 0 && c < c13[d]) { c13[d + 1] = c13[d]; c13[d] = c; d--; }
+	}
+	
+
+			int j = 0, k = 0,h=0;
+			for (j = 0, k = 0; j < a12&&k < a13;) { if (c12[j] <= c13[k]) { nnums[h] = c12[j]; j++; } else { nnums[h] = c13[k]; k++; }h++; } 
+			if (j == a12) { for (; k < a13; k++) { nnums[h] = c13[k]; h++; } }
+			else if (k == a13) { for (; j < a12; j++) { nnums[h] = c12[j]; h++; } }
+			for (h = 0; h < len; h++) { printf("%d\t", nnums[h]); }
+			return *nnums;
+
+			
+		}
+int main()
+{
+	printf("请输入一组数字输入0代表输入完成\n");
+	int A16[10000]; int p;
+	for (p = 0; ; p++) { scanf("%d", &A16[p]); if (A16[p] == 0) { break; } }
+	A12(A16, p);
+
+}
+
